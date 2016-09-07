@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>NewBoston Test</title>
+    <script src="https://npmcdn.com/react@15.3.1/dist/react.js"></script>
+    <script src="https://npmcdn.com/react-dom@15.3.1/dist/react-dom.js"></script>
+    <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <div id="repeatComponent"></div>
+    <hr>
+    <div id="movies"></div>
+    <hr>
+    <div id="events"></div>
+    <hr>
+    <div id="check"></div>
+
+
+    <script type="text/babel">
+
+    // component
+    var HelloWorld = React.createClass({
+      render: function() {
+        return (
+          <div>
+            <h1>Hello Component</h1>
+            <h2>This is data </h2>
+          </div>
+        );
+      }
+    });
+
+    ReactDOM.render(<HelloWorld />, document.getElementById('example'));
+    ReactDOM.render(<div>
+            <HelloWorld />
+            <HelloWorld />
+      </div>, document.getElementById('repeatComponent'));
+
+
+      // props
+      var Movie = React.createClass({
+        render: function() {
+          return (
+            <div>
+              <h1>{this.props.title}</h1>
+              <h2>{this.props.year}</h2>
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <div>
+          <Movie title="Avatar" year="2009" />
+          <Movie title="Titanic" year="1997" />
+        </div>, document.getElementById('movies'));
+
+
+     //Event Handling{
+     var Comment = React.createClass({
+
+      edit: function(){
+        alert('edit comment');
+      },
+
+      remove: function(){
+        alert('remove comment');
+      },
+
+       render: function() {
+         return (
+           <div className="customCSS">
+             <h1>{this.props.children}</h1>
+             <button onClick={this.edit}>Edit</button>
+             <button onClick={this.remove}>Remove</button>
+           </div>
+         );
+       }
+     });
+     /*
+     ReactDOM.render(
+       <div>
+          <Comment>This is a comment </Comment>
+          <Comment>Another comment </Comment>
+      </div>, document.getElementById('events'));
+
+      // States
+      var checkbox = React.createClass({
+
+        getIntialState: function(){
+          return {checked: true}
+        },
+
+        render: function(){
+            var msg;
+            if(this.state.checked){
+              msg = 'checked';
+            }else{
+              msg = 'unchecked';
+            }
+            return(
+              <div>
+                  <input type="checkbox" />
+                  <h3>checkbox is {msg}</h3>
+              </div>
+            );
+        }
+      });
+
+      ReactDOM.render(<checkbox />, document.getElementById('check')); */
+
+    </script>
+  </body>
+</html>
