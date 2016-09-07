@@ -13,9 +13,10 @@
     <hr>
     <div id="movies"></div>
     <hr>
+    <div id="check"></div>
+    <hr>
     <div id="events"></div>
     <hr>
-    <div id="check"></div>
 
 
     <script type="text/babel">
@@ -39,7 +40,7 @@
       </div>, document.getElementById('repeatComponent'));
 
 
-      // props
+      // properties
       var Movie = React.createClass({
         render: function() {
           return (
@@ -58,58 +59,110 @@
         </div>, document.getElementById('movies'));
 
 
-     //Event Handling{
-     var Comment = React.createClass({
-
-      edit: function(){
-        alert('edit comment');
-      },
-
-      remove: function(){
-        alert('remove comment');
-      },
-
-       render: function() {
-         return (
-           <div className="customCSS">
-             <h1>{this.props.children}</h1>
-             <button onClick={this.edit}>Edit</button>
-             <button onClick={this.remove}>Remove</button>
-           </div>
-         );
-       }
-     });
-     /*
-     ReactDOM.render(
-       <div>
-          <Comment>This is a comment </Comment>
-          <Comment>Another comment </Comment>
-      </div>, document.getElementById('events'));
-
       // States
-      var checkbox = React.createClass({
+      //values changes vs props(values unchanged)
+      var CheckBox = React.createClass({
 
-        getIntialState: function(){
-          return {checked: true}
+        getInitialState: function(){
+          return {checked : true}
         },
 
-        render: function(){
-            var msg;
-            if(this.state.checked){
-              msg = 'checked';
-            }else{
-              msg = 'unchecked';
-            }
-            return(
+        handleChecked: function(){
+          this.setState({checked: !this.state.checked})
+        },
+
+        render: function() {
+          var msg;
+          if(this.state.checked){
+            msg = 'checked'
+          }else{
+            msg = 'unchecked'
+          }
+          return (
               <div>
-                  <input type="checkbox" />
+                  <input type="checkbox" onChange={this.handleChecked} defaultChecked={this.state.checked} />
                   <h3>checkbox is {msg}</h3>
               </div>
-            );
+          );
         }
       });
 
-      ReactDOM.render(<checkbox />, document.getElementById('check')); */
+      ReactDOM.render(<CheckBox />, document.getElementById('check'));
+
+      //Event Handling       // Reference
+      var Comment = React.createClass({
+          getInitialState: function(){
+            return {editing: false}
+          },
+          edit: function(){
+            this.setState({editing: true});
+          },
+          save: function(){
+            var newText = this.refs.editedText.value;
+            console.log(newText);
+
+            this.setState({editing: false});
+          },
+          remove: function(){
+            console.log('remove comment');
+          },
+
+          renderNormal: function(){
+            return (
+              <div className="customCSS">
+                <h1>{this.props.children}</h1>
+                <button onClick={this.edit}>Edit</button>
+                <button onClick={this.remove}>Remove</button>
+              </div>
+            );
+          },
+          renderForm: function(){
+            return (
+              <div className="customCSS">
+                <textarea ref="editedText" defaultValue={this.props.children}></textarea>
+                <button onClick={this.save}>Save</button>
+              </div>
+            );
+          },
+
+          render: function() {
+            if(this.state.editing){
+              return this.renderForm();
+            }else{
+              return this.renderNormal();
+            }
+
+          }
+      });
+
+      //consists of multiple comments
+      var Board = React.createClass({
+
+          getInitialState: function(){
+            return {
+              comments:[
+                'This is first comment',
+                'This is last comment'
+                  ]
+            }
+          },
+
+
+          eachComment: function(item,i){
+            return(<Comment key={i} index={i}>{item}</Comment>);
+          },
+
+          render: function(){
+            return(
+              <div>
+                 {this.state.comments.map(this.eachComment)}
+             </div>
+
+            );
+          }
+      });
+
+      ReactDOM.render(<Board />, document.getElementById('events'));
 
     </script>
   </body>
