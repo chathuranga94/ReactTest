@@ -96,15 +96,16 @@
           },
           edit: function(){
             this.setState({editing: true});
+
           },
           save: function(){
-            var newText = this.refs.editedText.value;
-            console.log(newText);
-
+            console.log(this.refs.editedText.value);
+            this.props.updateText(this.refs.editedText.value,this.props.index);
             this.setState({editing: false});
           },
           remove: function(){
             console.log('remove comment');
+            this.props.deleteText(this.props.index);
           },
 
           renderNormal: function(){
@@ -125,7 +126,7 @@
             );
           },
 
-          render: function() {
+          render: function(){
             if(this.state.editing){
               return this.renderForm();
             }else{
@@ -147,16 +148,41 @@
             }
           },
 
+          addComment: function(text){
+            console.log('add comment:' + text);
+            var currentComments = this.state.comments;
+            currentComments.push(text);
+            this.setState({comments: currentComments});
+          },
+
+          removeComment: function(i){
+            console.log('Remove comment:' + i);
+            var currentComments = this.state.comments;
+            currentComments.splice(i,1);
+            this.setState({comments: currentComments});
+          },
+
+          updateComment: function(newText,i){
+            console.log('Update comments' + {i})
+            var currentComments = this.state.comments;
+            currentComments[i] = newText;
+            this.setState({comments: currentComments});
+          },
 
           eachComment: function(item,i){
-            return(<Comment key={i} index={i}>{item}</Comment>);
+            return( <Comment key={i} index={i} updateText={this.updateComment} deleteText={this.removeComment}>
+                        {item}
+                    </Comment>);
           },
 
           render: function(){
             return(
               <div>
-                 {this.state.comments.map(this.eachComment)}
-             </div>
+                  <button onClick={this.addComment.bind(null,'NewComment')}> New Comment </button>
+                  <div>
+                    {this.state.comments.map(this.eachComment)}
+                  </div>
+              </div>
 
             );
           }
