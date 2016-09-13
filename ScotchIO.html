@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>NewBoston Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0-alpha1/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="componet"></div>
+    <br>
+    <div id="props"></div>
+    <br>
+
+    <script type="text/jsx">
+        ReactDOM.render(
+            <h1>Hello, world!</h1>,
+            document.getElementById('point')
+        );
+
+
+    var MyComponent = React.createClass({
+        render: function(){
+            return (
+                <h1>Hello, {this.props.name}!</h1>
+            );
+        }
+    });
+
+    ReactDOM.render(<MyComponent name="Handsome" />, document.getElementById('props'));
+
+    </script>
+  </body>
+</html>
