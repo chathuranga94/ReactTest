@@ -4,7 +4,10 @@ export default class Title extends React.Component{
 
 	render(){
 		return(
-			<h3>HEADER TITLE</h3>
+			<div>
+				<h3>HEADER TITLE</h3>
+				<h3>{this.props.title}</h3>
+			</div>
 		);
 	}
 }
