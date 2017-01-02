@@ -9,6 +9,10 @@ export default function courseReducer(state = [], action){
 			];
 			// Spread operator and immutability of store -> Object.assign
 	
+		case types.LOAD_COURSES_SUCCESS:
+			debugger;
+			return action.courses;
+
 		default:
 			return state;
 	}
